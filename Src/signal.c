@@ -225,6 +225,18 @@ void checkDshot()
         buffersize = 32;
         inputSet = 1;
     }
+    if ((smallestnumber > 8) && (smallestnumber <= 16) && (average_signal_pulse < 200)) {
+        dshot = 1;
+        ic_timer_prescaler = 3;
+        if (CPU_FREQUENCY_MHZ > 100) {
+                output_timer_prescaler = 7;
+        } else {
+                output_timer_prescaler = 3;
+        }
+        buffer_padding = 3;
+        buffersize = 32;
+        inputSet = 1;
+    }	
 }
 void checkServo()
 {
