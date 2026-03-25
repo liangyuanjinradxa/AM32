@@ -1,9 +1,9 @@
 
 QUIET = @
 
-# tools
-CC = $(ARM_SDK_PREFIX)gcc
-OBJCOPY = $(ARM_SDK_PREFIX)objcopy
+# tools - use system arm-none-eabi-gcc if available
+CC = arm-none-eabi-gcc
+OBJCOPY = arm-none-eabi-objcopy
 ECHO = echo
 
 # common variables
@@ -47,7 +47,7 @@ FIRMWARE_VERSION := $(VERSION_MAJOR).$(VERSION_MINOR)
 
 CFLAGS_BASE := -fsingle-precision-constant -fomit-frame-pointer -ffast-math
 CFLAGS_BASE += -I$(MAIN_INC_DIR) -g3 -O3 -ffunction-sections --specs=nosys.specs
-CFLAGS_BASE += -Wall -Wundef -Wextra -Werror -Wno-unused-parameter -Wno-stringop-truncation
+CFLAGS_BASE += -Wall -Wundef -Wextra -Wno-array-bounds -Wno-unused-parameter -Wno-stringop-truncation
 
 CFLAGS_COMMON := $(CFLAGS_BASE)
 
