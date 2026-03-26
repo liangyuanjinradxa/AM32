@@ -276,6 +276,7 @@ void zcfoundroutine(void);
 uint8_t drive_by_rpm = 0;
 uint32_t MAXIMUM_RPM_SPEED_CONTROL = 10000;
 uint32_t MINIMUM_RPM_SPEED_CONTROL = 1000;
+uint16_t current_offset = 0;
 
 // assign speed control PID values values are x10000
 fastPID speedPid = { // commutation speed loop time
@@ -2034,7 +2035,10 @@ if(zero_crosses < 5){
             degrees_celsius = converted_degrees;
             battery_voltage = ((7 * battery_voltage) + ((ADC_raw_volts * 3300 / 4095 * VOLTAGE_DIVIDER) / 100)) >> 3;
             smoothed_raw_current = getSmoothedCurrent();
-            actual_current = ((smoothed_raw_current * 3300 / 41) - (CURRENT_OFFSET * 100)) / (MILLIVOLT_PER_AMP);
+            if(e_rpm == 0){
+                    current_offset =(smoothed_raw_current * 3300 / 4095);
+            }
+            actual_current = ((smoothed_raw_current * 3300 / 4095) - (current_offset)) * 100 / MILLIVOLT_PER_AMP;
             if (actual_current < 0) {
                 actual_current = 0;
             }             
